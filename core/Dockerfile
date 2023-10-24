@@ -44,12 +44,12 @@ RUN mkdir -p ~/Android/Sdk/cmdline-tools/latest/ && mv cmdline-tools/* ~/Android
 RUN yes | ~/Android/Sdk/cmdline-tools/latest/bin/sdkmanager --install emulator "build-tools;34.0.0" platform-tools "platforms;android-34-ext8" "system-images;android-33;google_apis;x86_64"
 
 # Create Android Virtual Device (AVD)
-RUN echo "no" | ~/Android/Sdk/cmdline-tools/latest/bin/avdmanager create avd -n test -k "system-images;android-33;google_apis;x86_64"
+ARG EMU=test
+
+RUN echo "no" | ~/Android/Sdk/cmdline-tools/latest/bin/avdmanager create avd -n "$EMU" -k "system-images;android-33;google_apis;x86_64"
 RUN echo "export ANDROID_HOME=/home/$USER/Android" >> /home/$USER/.bashrc 
 RUN echo "export ANDROID_SDK_ROOT=/home/$USER/Android/Sdk" >> /home/$USER/.bashrc
 RUN ls /home/$USER/Android/Sdk
-# Start Emulator
-# RUN ~/Android/Sdk/emulator/emulator @test
 
 RUN ln -s /studio-data/profile/AndroidStudio$ANDROID_STUDIO_VERSION .AndroidStudio$ANDROID_STUDIO_VERSION
 RUN ln -s /studio-data/Android Android
@@ -65,6 +65,9 @@ RUN sudo apt update && sudo apt install -y tigervnc-standalone-server
 COPY provisioning/docker_entrypoint.sh /usr/local/bin/docker_entrypoint.sh
 COPY provisioning/build_mobile_app.sh /usr/local/bin/build_mobile_app.sh
 RUN sudo chmod +x /usr/local/bin/*
+
 COPY provisioning/51-android.rules /etc/udev/rules.d/51-android.rules
+COPY provisioning/config.ini .
+RUN mv config.ini "/home/$USER/.android/avd/$EMU.avd/config.ini"
 
 ENTRYPOINT [ "/usr/local/bin/docker_entrypoint.sh" ]
