@@ -21,10 +21,16 @@ def deploy():
   p = subprocess.Popen(["../core/initiateDeployment.sh", project_url]) 
   code = p.wait()
 
-  print(code)
+  print("Status Code (from backend):", code)
 
+  if (code):
+    return jsonify({
+      "status": "Deployment failed"
+    })
   
   return jsonify({
+    "status": "Deployment successful",
     "url": "ws://localhost:6080", 
     "vncpassword": "password"
-  }) 
+  })
+  
