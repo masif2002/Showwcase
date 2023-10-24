@@ -1,0 +1,20 @@
+.Home {
+    margin: 4rem auto;
+    padding-top: 2rem;
+    width: 87vw;
+    color: #fff;
+    min-height: calc(100vh - (6rem + 4rem));
+}
+
+h3 {
+    margin-top: 1rem;
+}
+
+.userName{
+    color: #4db5ff;
+}
+
+.userName:hover{
+    color: rgba(77, 181, 255, 0.4);
+}
+

@@ -1,25 +1,58 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {Suspense} from 'react';
+import { BrowserRouter, Route, Navigate, Routes } from 'react-router-dom';
+import Auth from './Auth';
+import Home from './Home';
+import Navigation from './Navigation';
+import Welcome from './Welcome';
+import LoadingSpinner from './UIelement/LoadingSpinner';
+import {useAuth} from './hooks/auth-hook'
+import { AuthContext } from './context/auth-context';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const {token, login, logout, userId, accessToken} = useAuth();
+
+  let routes;
+
+  if(accessToken) {
+    routes = (
+      <Routes>
+        <Route path = '/' element = {<Welcome/>}/>
+        <Route path = '/home' element = {<Home/>}/>
+        <Route path = '*' element={<Navigate to ="/home" />}/>
+      </Routes>
+      
+    )
+  }
+  else {
+    console.log("No token.")
+    routes = (
+      <Routes>
+        <Route path='/' element={<Welcome/>}/>
+        <Route path='/auth' element={<Auth/>}/>
+        <Route path = '*' element={<Navigate to ="/" />}/>
+      </Routes>  
+    )
+  }
+
+    return (
+      <AuthContext.Provider value = {{isLoggedIn: !!token || accessToken, accessToken: accessToken, token:token, userId: userId,login: login, logout: logout}}>
+        <BrowserRouter>
+          <Navigation/>
+          <main>
+            <Suspense 
+                fallback = {
+                  <div className='center'>
+                    <LoadingSpinner/>
+                  </div>
+                }
+            >
+              {routes}
+            </Suspense>
+          </main>
+        </BrowserRouter>
+      </AuthContext.Provider>
+    );
+  
 }
 
 export default App;

@@ -1,0 +1,11 @@
+.Welcome {
+    margin: 4rem auto;
+    padding-top: 2rem;
+    width: 87vw;
+    color: #fff;
+    min-height: calc(100vh - (6rem + 4rem));
+}
+
+span {
+    color: #4db5ff;
+}

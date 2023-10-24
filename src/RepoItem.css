@@ -1,0 +1,23 @@
+.repo-card {
+    background: #2c2c6c;
+    border: 1px solid transparent;
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: center;
+    transition: all 400ms ease;
+}
+
+.repo-card:hover {
+    background: transparent;
+    border-color: rgba(77, 181, 255, 0.4);
+    cursor: default;
+}
+
+.content {
+    margin-top: 1rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.repo-name {
+    color: #4db5ff;
+}
