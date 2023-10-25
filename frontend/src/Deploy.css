@@ -1,0 +1,48 @@
+.Deploy {
+    margin: 4rem auto;
+    padding-bottom: 2rem;
+    width: 87vw;
+    height: 90vh;
+    color: #fff;
+    /* min-height: calc(100vh - (6rem + 4rem)); */
+    /* background-color: darkblue; */
+}
+
+.details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* background-color: aquamarine; */
+}
+
+
+.btn {
+    font-size: large;
+    width: max-content;
+    display: inline-block;
+    color: #4db5ff;
+    padding: 0.75rem 1.2rem;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    border: 1px solid #4db5ff;
+    transition: all 400ms ease;
+    background: transparent;
+}
+
+.btn:hover {
+    background: #fff;
+    color: #1f1f38;
+    border-color: transparent;
+}
+
+.renderArea {
+    margin: 2rem auto;
+    height: 90%;
+    /* background-color: darkgoldenrod;     */
+    border: 2px solid blue;
+}
+
+.status {
+    display: flex;
+    flex-direction: column;
+}

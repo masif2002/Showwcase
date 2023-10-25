@@ -7,6 +7,7 @@ import Welcome from './Welcome';
 import LoadingSpinner from './UIelement/LoadingSpinner';
 import {useAuth} from './hooks/auth-hook'
 import { AuthContext } from './context/auth-context';
+import Deploy from './Deploy';
 
 function App() {
   const {token, login, logout, userId, accessToken} = useAuth();
@@ -16,9 +17,11 @@ function App() {
   if(accessToken) {
     routes = (
       <Routes>
-        <Route path = '/' element = {<Welcome/>}/>
-        <Route path = '/home' element = {<Home/>}/>
-        <Route path = '*' element={<Navigate to ="/home" />}/>
+        <Route exact path = '/' element = {<Welcome/>}/>
+        <Route exact path = '/home' element = {<Home/>}>
+        </Route>
+        <Route exact path = 'deploy/:userName/:repoName' element = {<Deploy/>}/>
+        <Route path = '*' element={<Navigate to ="/home" replace/>}/>
       </Routes>
       
     )

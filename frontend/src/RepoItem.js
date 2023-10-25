@@ -1,19 +1,18 @@
 import React from 'react'
 import './RepoItem.css'
+import { Navigate, useNavigate } from 'react-router-dom'
 
 const RepoItem = ({repo, userName}) => {
+    const navigate = useNavigate();
+
     const goToRepo = (event) => {
-        // await fetch("https://api.github.com/" + userName + "/" + repoName + ".git")
-        // .then((response) => {
-        //     return response.json();
-        // }).then((data) => {
-        //     setUserRepos(data);
-        // }).catch(err => {
-        //     console.log(err);
-        // })
+        
         event.stopPropagation();
         console.log(event.target.getAttribute('data-name'));
-        window.location.assign("https://github.com/" + userName + "/" + event.target.getAttribute('data-name') + ".git");
+        const repoName = event.target.getAttribute('data-name');
+
+        // window.location.assign("https://github.com/" + userName + "/" + event.target.getAttribute('data-name') + ".git");
+        navigate(`/deploy/${userName}/${repoName}`);
     }
 
     return (
