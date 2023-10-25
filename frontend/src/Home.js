@@ -1,9 +1,11 @@
 import React,{useEffect, useState} from 'react'
 import './Home.css'
 import ReposList from './ReposList';
+import LoadingSpinner from './UIelement/LoadingSpinner'
 
 const Home = () => {
     const [userData, setUserData] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const getUserData = async () => {
@@ -18,26 +20,36 @@ const Home = () => {
             }).then((data) => {
                 console.log(data);
                 setUserData(data);
+                setIsLoading(false);
             })
             .catch((err) => {
-                console.log(err);        
+                console.log(err);
+                setIsLoading(false);        
             }) 
         }
         getUserData();
     }, [])
     
     return (
-        <main className='Home'>
-            {userData && 
-                <h2>
-                    Hello <span className='userName'>{userData.login} </span> ! 
-                </h2>
-            }
-            <h3>
-                Select a repository to containerize.  
-            </h3>            
-            {userData && <ReposList userName = {userData.login}/>}
-        </main>
+        <React.Fragment>
+            {isLoading && (
+                <div className="center">
+                    <LoadingSpinner/>
+                </div>
+            )}
+            {!isLoading && <main className='Home'>
+                {userData && 
+                    <h2>
+                        Hello <span className='userName'>{userData.login} </span> ! 
+                    </h2>
+                }
+                <h3>
+                    Select a repository to containerize.  
+                </h3>            
+                {userData && <ReposList userName = {userData.login}/>}
+            </main>}
+        </React.Fragment>
+        
     )
 }
 

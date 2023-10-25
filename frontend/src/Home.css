@@ -18,3 +18,10 @@ h3 {
     color: rgba(77, 181, 255, 0.4);
 }
 
+.center {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
