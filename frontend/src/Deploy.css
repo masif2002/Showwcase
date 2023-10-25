@@ -1,3 +1,7 @@
+:root {
+    --disabled:  #1d3546;
+}
+
 .Deploy {
     margin: 4rem auto;
     padding-bottom: 2rem;
@@ -29,6 +33,11 @@
     background: transparent;
 }
 
+.btn:disabled {
+    color: var(--disabled);
+    border-color: var(--disabled);
+}
+
 .btn:hover {
     background: #fff;
     color: #1f1f38;
@@ -45,4 +54,9 @@
 .status {
     display: flex;
     flex-direction: column;
+}
+
+.btn-container {
+    display: flex;
+    gap: 10px;
 }
