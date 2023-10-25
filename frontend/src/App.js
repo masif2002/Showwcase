@@ -17,10 +17,9 @@ function App() {
   if(accessToken) {
     routes = (
       <Routes>
-        <Route exact path = '/' element = {<Welcome/>}/>
-        <Route exact path = '/home' element = {<Home/>}>
-        </Route>
-        <Route exact path = 'deploy/:userName/:repoName' element = {<Deploy/>}/>
+        <Route path = 'home' element = {<Home/>}/>
+        <Route path = 'deploy/:userName/:repoName' element = {<Deploy/>}/>
+        <Route path = '/' element = {<Welcome/>}/>
         <Route path = '*' element={<Navigate to ="/home" replace/>}/>
       </Routes>
       
@@ -30,15 +29,15 @@ function App() {
     console.log("No token.")
     routes = (
       <Routes>
+        <Route path='auth' element={<Auth/>}/>
         <Route path='/' element={<Welcome/>}/>
-        <Route path='/auth' element={<Auth/>}/>
-        <Route path = '*' element={<Navigate to ="/" />}/>
+        {/* <Route path = '*' element={<Navigate to ="/" />}/> */}
       </Routes>  
     )
   }
 
     return (
-      <AuthContext.Provider value = {{isLoggedIn: !!token || accessToken, accessToken: accessToken, token:token, userId: userId,login: login, logout: logout}}>
+      <AuthContext.Provider value = {{isLoggedIn: !!token || !!accessToken, accessToken: accessToken, token:token, userId: userId,login: login, logout: logout}}>
         <BrowserRouter>
           <Navigation/>
           <main>

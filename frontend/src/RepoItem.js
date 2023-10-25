@@ -1,6 +1,6 @@
 import React from 'react'
 import './RepoItem.css'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const RepoItem = ({repo, userName}) => {
     const navigate = useNavigate();
@@ -17,11 +17,11 @@ const RepoItem = ({repo, userName}) => {
 
     return (
         <div className="repo-card" key={repo.id} data-name={repo.name} onClick={goToRepo}>
-            <h3 className="repo-name">{repo.name}</h3>
-            <div className='content'>
-                <p className="lang">Language: {repo.language === null ? "none" : repo.language}</p>
-                <p className="date">Start date & time: {repo.created_at}</p>
-                <p className="visibility">Visibility: {repo.visibility}</p>
+            <h3 className="repo-name" data-name={repo.name}>{repo.name}</h3>
+            <div className='content' data-name={repo.name}>
+                <p className="lang" data-name={repo.name}>Language: {repo.language === null ? "none" : repo.language}</p>
+                <p className="date" data-name={repo.name}>Start date & time: {repo.created_at}</p>
+                <p className="visibility" data-name={repo.name}>Visibility: {repo.visibility}</p>
             </div>
         </div>
     )
