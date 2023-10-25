@@ -8,7 +8,7 @@ const Navigation = () => {
     const auth  = useContext(AuthContext);
   return (
     <header>
-        <a className="logo">mobileapp showcase</a>
+        <a className="logo">SHOWWCASE</a>
         <ul>
             <li>
                 <NavLink to = "/" exact>About</NavLink>

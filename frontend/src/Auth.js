@@ -6,7 +6,7 @@ import { useHttpClient } from "./hooks/htttp-hook";
 import ErrorModal from "./UIelement/ErrorModal";
 import LoadingSpinner from "./UIelement/LoadingSpinner";
 
-const CLIENT_ID = "9ca15689cc4006dee638";
+const CLIENT_ID = "4b9f0b4d2f261ef00d45";
 
 const Auth = () => {
     const {isLoading, error, clearError} = useHttpClient();

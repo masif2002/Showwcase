@@ -44,7 +44,7 @@ const Home = () => {
                     </h2>
                 }
                 <h3>
-                    Select a repository to containerize.  
+                    Please select a GitHub repository to deploy >  
                 </h3>            
                 {userData && <ReposList userName = {userData.login}/>}
             </main>}

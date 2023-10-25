@@ -32,10 +32,14 @@ const Welcome = () => {
     }, [auth])
 
     return (
-        <h2 className='Welcome'>
-            Welcome to <span>Mobile App Showcase!</span>
-        </h2>
-    )
+        <>
+            <h2 className='Welcome'>
+                Welcome to <span>Showwcase! </span> 
+                    Your one stop destination for deploying mobile apps!
+            </h2>
+           
+        </>
+        )
 }
 
 export default Welcome
