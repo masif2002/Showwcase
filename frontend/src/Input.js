@@ -1,58 +1,34 @@
-import React, {useReducer, useEffect} from "react";
-import { validate } from "./util/validators";
-import './Input.css'
+import styled from "styled-components";
 
-const inputReducer = (state, action) => {
-    switch(action.type) {
-        case 'CHANGE':
-            return {
-                ...state,
-                value: action.val,
-                isValid: validate(action.val,action.validators)
-            };
-        case 'TOUCH':
-            return {
-                ...state,
-                isTouched: true
-            }
-        default:
-            return state;
-    }
-}
-
-export default function Input({id, type, placeholder, onInput, initialValue, initialValid, errorText, validators}) {
-    const [inputState, dispatch] = useReducer(inputReducer, {
-        value: initialValue || '', 
-        isTouched: false, 
-        isValid: initialValid || false
-    });
-
-    const {value, isValid} = inputState;
-
-    useEffect(() => {
-        onInput(id,value,isValid);
-    },[id, value, isValid, onInput]);
-
-    const changeHandler = event => {
-        dispatch({type: 'CHANGE', val: event.target.value, validators: validators});
-    }
-
-    const touchHandler = () => {
-        dispatch({type: 'TOUCH'});
-    }
-
+export default function Input({type, placeholder}) {
     return (
-        <div>
-            <input className={!inputState.isValid && inputState.isTouched && `form-control--invalid`}
-                id = {id}
-                type = {type} 
-                placeholder={placeholder} 
-                onInput={onInput} 
-                onChange={changeHandler} 
-                onBlur={touchHandler}
-            />
-            {!inputState.isValid && inputState.isTouched && <p>{errorText}</p>}
-        </div>
-        
+        <StyledInput type = {type} placeholder={placeholder}/>
     )
 }
+
+const StyledInput = styled.input`
+    background: rgba(255, 255, 255, 0.15);
+    /* box-shadow: 0 8px 32px 0 rgba(31,38,135,0.37); */
+    border-radius: 0.5rem;
+    background: transparent;
+    border: 1px solid #4db5ff;
+    width: 80%;
+    height: 3rem;
+    padding: 1rem;
+    outline: none;
+    color: #3c354e;
+    font-size: 1rem;
+    font-weight: bold;
+    &:focus {
+        display: inline-block;
+        border-color: #fff;
+        box-shadow: 0 0 0 0.1rem #fff;
+        /* backdrop-filter: blur(12rem); */
+        
+    }
+    &::placeholder {
+        color: #b9abe099;
+        font-weight: 100;
+        font-size: 1rem;
+    }
+`

@@ -23,8 +23,7 @@ const Home = () => {
                 setIsLoading(false);
             })
             .catch((err) => {
-                console.log(err);
-                setIsLoading(false);        
+                console.log(err);           
             }) 
         }
         getUserData();
@@ -44,7 +43,7 @@ const Home = () => {
                     </h2>
                 }
                 <h3>
-                    Please select a GitHub repository to deploy >  
+                    Please select a GitHub repository to deploy  
                 </h3>            
                 {userData && <ReposList userName = {userData.login}/>}
             </main>}

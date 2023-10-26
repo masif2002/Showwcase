@@ -1,13 +1,29 @@
 import styled from "styled-components";
 
 
-export default function Icon({color, children}) {
+export default function Icon({color, children, name}) {
     return (
-        <StyledIcon background = {color}>
-            {children}
-        </StyledIcon>
+        <Wrapper>
+            <IconName>
+                {name}
+            </IconName>
+            <StyledIcon background = {color}>
+                {children}
+            </StyledIcon>
+        </Wrapper>
     )
 }
+
+const Wrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`
+
+const IconName = styled.p`
+
+`
 
 const StyledIcon = styled.div`
     height: 3.5rem;
@@ -29,6 +45,6 @@ const StyledIcon = styled.div`
     }
 
     &:hover {
-        transform: scale(1.2);
+        transform: scale(1.1);
     }
 `

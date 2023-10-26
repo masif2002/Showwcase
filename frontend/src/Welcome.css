@@ -1,11 +1,84 @@
-.Welcome {
-    margin: 4rem auto;
-    padding-top: 2rem;
+.Home_container {
+    margin: 4rem auto; 
+    padding: 2rem 0;
     width: 87vw;
     color: #fff;
     min-height: calc(100vh - (6rem + 4rem));
+    /* background-color: aqua; */
 }
 
 span {
     color: #4db5ff;
+    font-weight: bolder;
 }
+
+.slogan {
+    padding-top: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+}
+
+.para {
+    padding-top: 2rem;
+    width: 80%;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.intro {
+    font-size: medium;
+}
+
+.main_topic {
+    color: #fff;
+} 
+
+.section {
+    margin-top: 4rem;
+}
+
+.topic {
+    padding-top: 0.5rem;
+}
+
+.content {
+    margin-top: 0;
+}
+
+.content-1 {
+    margin-top: 1rem;
+}
+
+.title {
+    color: #6FB3E0;
+}
+
+form {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+input, textarea {
+    width: 50%;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    background: transparent;
+    border: 2px solid rgba(77, 181, 255, 0.4);
+    resize: none;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+input:focus {
+    display: inline-block;
+    border-color: #fff;
+    box-shadow: 0 0 0 0.1rem #fff;
+    /* backdrop-filter: blur(12rem); */ 
+}
+
+.contact {
+    margin-top: 1.5rem;
+}
+
+

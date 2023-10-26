@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import {useParams } from 'react-router-dom'
 import './Deploy.css'
+import LoadingSpinner from './UIelement/LoadingSpinner'
 
 import { server } from './util/server'
 import RFB from "@novnc/novnc/";
@@ -10,13 +11,13 @@ const Deploy = () => {
     const [disableDeploy, setDisableDeploy] = useState(false)
     const [URL, setURL] = useState(null)
     const [vncpassword, setVncpassword] = useState(null)
+    const [isDeploying, setIsDeploying] = useState(false);
 
     const [RFBobj, setRFBobj] = useState(null)
     const [disabledViewButton, setDisabledViewButton] = useState(true);
     const [disabledDisconnectButton, setdisabledDisconnectButton] = useState(true)
 
     const screen = useRef(null);
-
 
     const userName = useParams().userName;
     const repoName = useParams().repoName;
@@ -37,6 +38,7 @@ const Deploy = () => {
 
         setStatus("DEPLOYING ...")
         setDisableDeploy(true)
+        setIsDeploying(true)
 
         const response = await fetch(`${server}/deploy`, {
             method: 'POST',
@@ -56,6 +58,7 @@ const Deploy = () => {
         setStatus(data.status)
 
         setDisableDeploy(false)
+        setIsDeploying(false)
     }
 
     const initiateConnection = () => {
@@ -118,8 +121,15 @@ const Deploy = () => {
                 </div>
 
             </div>
-            <div className='renderArea' ref={screen}>
-            </div>
+            {isDeploying && 
+                <div className="center">
+                    <LoadingSpinner/>
+                </div>
+            }
+            {!isDeploying && 
+                <div className='renderArea' ref={screen}>
+                </div>
+            }
         </main>
     )
 }

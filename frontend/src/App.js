@@ -31,7 +31,7 @@ function App() {
       <Routes>
         <Route path='auth' element={<Auth/>}/>
         <Route path='/' element={<Welcome/>}/>
-        {/* <Route path = '*' element={<Navigate to ="/" />}/> */}
+        <Route path = '*' element={<Navigate to ="/" />}/>
       </Routes>  
     )
   }
