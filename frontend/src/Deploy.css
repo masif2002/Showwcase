@@ -4,7 +4,7 @@
 
 .Deploy {
     margin: 4rem auto;
-    padding-bottom: 2rem;
+    padding-bottom: 60px;
     width: 87vw;
     height: 90vh;
     color: #fff;
@@ -46,8 +46,7 @@
 
 .renderArea {
     margin: 2rem auto;
-    height: 90%;
-    /* background-color: darkgoldenrod;     */
+    min-height: 90%;
     border: 2px solid blue;
 }
 
