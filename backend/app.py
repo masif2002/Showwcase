@@ -7,12 +7,6 @@ import socket
 app = Flask(__name__)
 CORS(app)
 
-
-def getIP():
-  hostname=socket.gethostname()
-  ipAddr=socket.gethostbyname(hostname)
-  return ipAddr
-
 @app.route("/")
 def hello():
   return "Hello World!"
@@ -29,7 +23,7 @@ def deploy():
 
   print("Status Code (from backend):", code)
 
-  ip = getIP()  
+  ip = subprocess.getoutput("hostname -I | awk '{print $1}'")  
 
   if (code):
     return jsonify({
