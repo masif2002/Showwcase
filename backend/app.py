@@ -20,21 +20,21 @@ def hello():
 @app.route("/deploy", methods=["GET", "POST"])
 def deploy():
 
-  # # Extract Project URL
-  # project_url = request.json['project']
+  # Extract Project URL
+  project_url = request.json['project']
 
-  # # Launch the container
-  # p = subprocess.Popen(["../core/initiateDeployment.sh", project_url]) 
-  # code = p.wait()
+  # Launch the container
+  p = subprocess.Popen(["../core/initiateDeployment.sh", project_url]) 
+  code = p.wait()
 
-  # print("Status Code (from backend):", code)
+  print("Status Code (from backend):", code)
 
   ip = getIP()  
 
-  # if (code):
-  #   return jsonify({
-  #     "status": "Deployment failed"
-  #   })
+  if (code):
+    return jsonify({
+      "status": "Deployment failed"
+    })
   
   return jsonify({
     "status": "Deployment successful",
