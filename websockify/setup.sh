@@ -1,9 +1,9 @@
 #!/bin/bash
 
 DIR="server"
+IP=`hostname -I | awk '{print $1}'`
 
 rm -rf "$DIR"
 git clone https://github.com/novnc/websockify "$DIR" 
 cd "$DIR"
-./run localhost:6080 localhost:5920
-
+./run "$IP:6080" "$IP:5920"
