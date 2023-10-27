@@ -29,11 +29,14 @@ const Deploy = () => {
 
     useEffect(() => {
         if (!!URL && !!vncpassword) setDisabledViewButton(false);
-        
+        else setDisabledViewButton(true);
       }, [URL, vncpassword]);
     
 
     const initiateDeployment = async (event) => {
+        setURL(null)
+        setVncpassword(null)
+
         const githubURL = `https://github.com/${userName}/${repoName}`
 
         setStatus("DEPLOYING ...")
