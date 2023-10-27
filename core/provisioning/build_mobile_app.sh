@@ -37,9 +37,10 @@ PACKAGE_NAME=`cat "$APP_DETAILS" | grep 'package="com' | awk -F'"' '{print $2}'`
 ACTIVITY_NAME="$PACKAGE_NAME.MainActivity"
 
 # Launch app
-adb kill-server
-adb start-server
-sleep 10
-adb shell am start -n "$PACKAGE_NAME/$ACTIVITY_NAME" -a android.intent.action.MAIN -c android.intent.category.LAUNCHER
+# adb kill-server
+# adb start-server
+# sleep 10
+# adb shell am start -n "$PACKAGE_NAME/$ACTIVITY_NAME" -a android.intent.action.MAIN -c android.intent.category.LAUNCHER
+adb shell am start -n "$PACKAGE_NAME/$ACTIVITY_NAME"
 
 # Execute this script from host machine: docker exec -it  8ecb251458e6 /bin/bash -c "PROJECT='https://github.com/dudeitsasif/HelloWorldAndroid' /usr/local/bin/build_mobile_app.sh"
