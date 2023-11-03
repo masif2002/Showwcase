@@ -29,6 +29,34 @@ mkdir -p studio-data/profile/java
 
 docker volume create --name=android_studio > /dev/null
 
-docker stop `docker ps -q` > /dev/null # Kills all containers
+# docker stop `docker ps -q` > /dev/null # Kills all containers
 
-docker run -d -p 5920:5920 -i $AOSP_ARGS -v `pwd`/studio-data:/studio-data -v android_studio:/androidstudio-data --privileged --group-add   plugdev imasiftoo/android-emulator $@ # Ports forwarded coupled with DISPLAY variable above
+PORT=5920
+
+startContainer() {
+    STARTUP=$(docker run -d -p $PORT:$PORT -i $AOSP_ARGS -v `pwd`/studio-data:/studio-data -v android_studio:/androidstudio-data --privileged --group-add   plugdev imasiftoo/android-emulator $@ 2>&1)
+    echo #STARTUP
+}
+
+startContainerOnAvailablePort() {
+    startContainer
+    portConflict="port is already allocated"
+    while [ $PORT -lt 65535 ]
+    do 
+        if [[ "$STARTUP" == *"$portConflict"* ]]
+        then
+            echo "ERROR: Port $PORT is occupied"
+            PORT=$(($PORT+1))
+            startContainer
+        else 
+            echo "SUCCESS: Container started on port $PORT"
+            break
+        fi  
+    done
+   
+}
+
+# docker run -d -p 5921:5921 -i $AOSP_ARGS --privileged --group-add plugdev imasiftoo/android-emulator $@ # Ports forwarded coupled with DISPLAY variable above
+
+startContainerOnAvailablePort
+

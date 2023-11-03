@@ -42,8 +42,8 @@ const Deploy = () => {
         setStatus("DEPLOYING ...")
         setDisableDeploy(true)
         setIsDeploying(true)
-
-        const response = await fetch(`${server}/deploy`, {
+        const token = prompt("Token required:")
+        const response = await fetch(`${server}/deploy?token=${token}`, {
             method: 'POST',
             headers: {
                 "Content-type": "application/json"
