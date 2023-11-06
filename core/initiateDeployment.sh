@@ -6,8 +6,9 @@ then
     exit 1
 fi
 
-pwd
-cd $HOME/Projects/Showwcase/core
+cd ../core
+
+rm -rf studio-data
 
 # Start Container
 CID=`./run.sh`

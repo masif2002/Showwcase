@@ -32,6 +32,6 @@ docker volume create --name=android_studio > /dev/null
 docker stop $(docker ps -aq) > /dev/null # Kills all containers
 
 # Run only if there is no space
-docker rm $(docker ps -aq) > /dev/null #Removes exited container to save space
+# docker rm $(docker ps -aq) > /dev/null #Removes exited container to save space
 
 docker run -d -p 5920:5920 -i $AOSP_ARGS -v `pwd`/studio-data:/studio-data -v android_studio:/androidstudio-data --privileged --group-add   plugdev imasiftoo/android-emulator $@ # Ports forwarded coupled with DISPLAY variable above
