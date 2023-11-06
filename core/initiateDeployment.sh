@@ -6,7 +6,8 @@ then
     exit 1
 fi
 
-cd $HOME/Showwcase/core/
+pwd
+cd $HOME/Projects/Showwcase/core
 
 # Start Container
 CID=`./run.sh`
