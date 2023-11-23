@@ -35,7 +35,6 @@ PORT=5920
 
 startContainer() {
     STARTUP=$(docker run -d -p $PORT:$PORT -i $AOSP_ARGS -v `pwd`/studio-data:/studio-data -v android_studio:/androidstudio-data --privileged --group-add   plugdev imasiftoo/android-emulator $@ 2>&1)
-    echo #STARTUP
 }
 
 startContainerOnAvailablePort() {
@@ -49,14 +48,24 @@ startContainerOnAvailablePort() {
             PORT=$(($PORT+1))
             startContainer
         else 
-            echo "SUCCESS: Container started on port $PORT"
+            echo "SUCCESS: Port $PORT is available"
+            ID=$(echo $STARTUP | cut -c -12)
+            echo $ID  
             break
         fi  
     done
-   
+
+   # If ran out of ports
+   if [[ "$STARTUP" == *"$portConflict"* ]]
+   then
+    exit 1
+   fi
 }
 
 # docker run -d -p 5921:5921 -i $AOSP_ARGS --privileged --group-add plugdev imasiftoo/android-emulator $@ # Ports forwarded coupled with DISPLAY variable above
 
 startContainerOnAvailablePort
 
+# Add token with Container ID and PORT to tokenFile (websockify)
+cd ../websockify/server
+echo "$ID: $(hostname -I | awk '{print $1}'):$PORT" >> token.config
