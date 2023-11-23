@@ -43,9 +43,6 @@ const Deploy = () => {
       initiateConnection();
     }
 
-    return () => {
-        RFBobj?.disconnect();
-      };
 
   }, [URL, vncpassword]);
 
