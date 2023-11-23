@@ -8,33 +8,36 @@ import LoadingSpinner from './UIelement/LoadingSpinner';
 import {useAuth} from './hooks/auth-hook'
 import { AuthContext } from './context/auth-context';
 import Deploy from './Deploy';
+import View from './View';
 
 function App() {
   const {token, login, logout, userId, accessToken} = useAuth();
 
   let routes;
 
-  if(accessToken) {
+  // if(accessToken) {
     routes = (
       <Routes>
         <Route path = 'home' element = {<Home/>}/>
+        <Route path = 'auth' element={<Auth/>}/>
         <Route path = 'deploy/:userName/:repoName' element = {<Deploy/>}/>
+        <Route path = 'view/:uid' element = {<View/>}/>
         <Route path = '/' element = {<Welcome/>}/>
         <Route path = '*' element={<Navigate to ="/home" replace/>}/>
       </Routes>
       
     )
-  }
-  else {
-    console.log("No token.")
-    routes = (
-      <Routes>
-        <Route path='auth' element={<Auth/>}/>
-        <Route path='/' element={<Welcome/>}/>
-        <Route path = '*' element={<Navigate to ="/" />}/>
-      </Routes>  
-    )
-  }
+  // }
+  // else {
+  //   console.log("No token.")
+  //   routes = (
+  //     <Routes>
+  //       <Route path='auth' element={<Auth/>}/>
+  //       <Route path='/' element={<Welcome/>}/>
+  //       <Route path = '*' element={<Navigate to ="/" />}/>
+  //     </Routes>  
+  //   )
+  // }
 
     return (
       <AuthContext.Provider value = {{isLoggedIn: !!token || !!accessToken, accessToken: accessToken, token:token, userId: userId,login: login, logout: logout}}>

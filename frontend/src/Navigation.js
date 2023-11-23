@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import Button from './Button'
 import './Navigation.css'
 import { AuthContext } from './context/auth-context'
@@ -8,7 +8,7 @@ const Navigation = () => {
     const auth  = useContext(AuthContext);
   return (
     <header>
-        <p className="logo">SHOWWCASE</p>
+        <Link to='/' className="logo">SHOWWCASE</Link> 
         <ul>
             <li>
                 <NavLink to = "/" exact>About</NavLink>
