@@ -1,47 +1,30 @@
 import React, { useState, useRef, useEffect } from 'react'
-import {useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import './Deploy.css'
 import LoadingSpinner from './UIelement/LoadingSpinner'
 
 import { server } from './util/server'
-import RFB from "@novnc/novnc/";
 
 const Deploy = () => {
     const [status, setStatus] = useState("IDLE")
-    const [disableDeploy, setDisableDeploy] = useState(false)
     const [URL, setURL] = useState(null)
-    const [vncpassword, setVncpassword] = useState(null)
+    
+    const [disableDeploy, setDisableDeploy] = useState(false)
     const [isDeploying, setIsDeploying] = useState(false);
 
-    const [RFBobj, setRFBobj] = useState(null)
-    const [disabledViewButton, setDisabledViewButton] = useState(true);
-    const [disabledDisconnectButton, setdisabledDisconnectButton] = useState(true)
-
-    const screen = useRef(null);
 
     const userName = useParams().userName;
     const repoName = useParams().repoName;
 
-    useEffect(() => {
-        !!URL && setDisabledViewButton(false)
-
-    }, [URL])
-
-    useEffect(() => {
-        if (!!URL && !!vncpassword) setDisabledViewButton(false);
-        else setDisabledViewButton(true);
-      }, [URL, vncpassword]);
-    
 
     const initiateDeployment = async (event) => {
-        setURL(null)
-        setVncpassword(null)
 
         const githubURL = `https://github.com/${userName}/${repoName}`
 
         setStatus("DEPLOYING ...")
         setDisableDeploy(true)
         setIsDeploying(true)
+<<<<<<< HEAD
         const token = prompt("Token required:")
         const response = await fetch(`${server}/deploy?token=${token}`, {
             method: 'POST',
@@ -50,40 +33,37 @@ const Deploy = () => {
             },
             body: JSON.stringify({
                 project: githubURL,
+=======
+
+        try {
+
+            const response = await fetch(`${server}/deploy`, {
+                method: 'POST',
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify({
+                    project: githubURL,
+                })
+>>>>>>> main
             })
-        })
-        
-        const data = await response.json()
-        console.log(data)
-
-        setURL(data.url)
-        setVncpassword(data.vncpassword)
-        setStatus(data.status)
-
-        setDisableDeploy(false)
-        setIsDeploying(false)
-    }
-
-    const initiateConnection = () => {
-        setDisabledViewButton(true)
-        setdisabledDisconnectButton(false)
+            
+            const data = await response.json()
+            console.log(data)
     
-        let rfb = new RFB(screen.current, URL, {
-            credentials: { password: vncpassword },
-        });
-
-        setRFBobj(rfb)
+            setStatus(data.status)
+            setURL(window.location.origin + `/view/${data.uid}`)
     
-        rfb.viewOnly = false;
-        rfb.scaleViewport = false;
-    }
-    
-    const disconnect = () => {
-        RFBobj.disconnect()
-        setDisabledViewButton(false)
-        setdisabledDisconnectButton(true)
-    }
+            setDisableDeploy(false)
+            setIsDeploying(false)
 
+        } catch {
+            setStatus("IDLE")
+            setDisableDeploy(false)
+            setIsDeploying(false)
+            alert("Something went wrong!")
+        }
+    }
 
 
     return (
@@ -91,7 +71,7 @@ const Deploy = () => {
             <div className='details'>
                 <div className='status'>
                     <h3>
-                        Respository: <span>{repoName}</span>.
+                        Repository: <span>{repoName}</span>.
                     </h3>
                     <h3>Status: <span>{status}</span></h3>
                 </div>
@@ -105,22 +85,7 @@ const Deploy = () => {
                         Deploy
                     </button>
 
-                    <button 
-                        className='btn'
-                        onClick={initiateConnection}
-                        disabled={disabledViewButton}
-                    >
-                        Connect
-                    </button>
-
-
-                    <button 
-                        className='btn margin-left'
-                        onClick={disconnect}
-                        disabled={disabledDisconnectButton}
-                    >
-                        Disconnect
-                    </button>
+                  
                 </div>
 
             </div>
@@ -129,9 +94,14 @@ const Deploy = () => {
                     <LoadingSpinner/>
                 </div>
             }
-            {!isDeploying && 
-                <div className='renderArea' ref={screen}>
-                </div>
+
+            {URL &&
+                <h3 className='m-10'>
+                    You can view your deployment at: 
+                    <a href={URL} className='ml-5'>
+                        <span>{URL}</span>
+                    </a>
+                </h3>
             }
         </main>
     )

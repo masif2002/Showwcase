@@ -1,15 +1,23 @@
-from flask import Flask, render_template, request, flash, jsonify
-import subprocess
+from flask import Flask, request, jsonify
 from flask_cors import CORS
-import socket
+from .models import db, Uidmapper
 
+import subprocess
+from uuid import uuid4
 
 app = Flask(__name__)
 CORS(app)
 
+# setting up DB connection
+# mysql://username:password@host:port/database_name
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://showwcase:password@localhost:3306/uidmapper'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db.init_app(app)
+
+# Routes
 @app.route("/")
 def hello():
-  return "Hello World!"
+  return "Welcome to Showwcase!"
 
 @app.route("/deploy", methods=["GET", "POST"])
 def deploy():
@@ -24,16 +32,33 @@ def deploy():
 
   # print("Status Code (from backend):", code)
 
-  ip = subprocess.getoutput("hostname -I | awk '{print $1}'")  
+  if (code):
+    return jsonify({
+      "status": "Deployment failed"
+    })
 
-  # if (code):
-  #   return jsonify({
-  #     "status": "Deployment failed"
-  #   })
+  # Create a Deployment URL
+  ip = subprocess.getoutput("hostname -I | awk '{print $1}'")  
   
+  uid = str(uuid4())
+  url = f"ws://{ip}:6080"
+  deployment = Uidmapper(repository=project_url, uid=uid, connection_url=url)
+
+  db.session.add(deployment)
+  db.session.commit()
+
   return jsonify({
     "status": "Deployment successful",
-    "url": f"ws://{ip}:6080/?token={token}", 
-    "vncpassword": "password"
+    "uid": uid, 
   })
   
+@app.route("/view/<uid>", methods=["GET"])
+def view(uid):
+
+  deployment = Uidmapper.query.get(uid)
+
+  return jsonify({
+    "repository": deployment.repository,
+    "url": deployment.connection_url, 
+    "vncpassword": "password",
+  })
