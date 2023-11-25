@@ -11,7 +11,7 @@ export PATH=$PATH:/studio-data/platform-tools/
 mkdir /home/`whoami`/.vnc # Move this to docker file
 echo "password" | vncpasswd -f > /home/`whoami`/.vnc/passwd
 # Xvnc :20 -PasswordFile /home/`whoami`/.vnc/passwd 
-Xvnc :20 -rfbport 5921 -PasswordFile /home/`whoami`/.vnc/passwd & # The & symbol here is executing the emulator command on the side
+Xvnc :20 -rfbport $XVNC_PORT -PasswordFile /home/`whoami`/.vnc/passwd & # The & symbol here is executing the emulator command on the side
 
 # Default to 'bash' if no arguments are provided
 args="$@"

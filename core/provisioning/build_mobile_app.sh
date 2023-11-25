@@ -42,5 +42,16 @@ ACTIVITY_NAME="$PACKAGE_NAME.MainActivity"
 # sleep 10
 # adb shell am start -n "$PACKAGE_NAME/$ACTIVITY_NAME" -a android.intent.action.MAIN -c android.intent.category.LAUNCHER
 adb shell am start -n "$PACKAGE_NAME/$ACTIVITY_NAME"
+status=$?
+if [ $status -gt 0 ] 
+then
+   while [ $status -gt 0 ];
+   do
+        adb kill-server
+        adb start-server
+        adb shell am start -n "$PACKAGE_NAME/$ACTIVITY_NAME"
+        status=$?
+   done 
+fi
 
 # Execute this script from host machine: docker exec -it  8ecb251458e6 /bin/bash -c "PROJECT='https://github.com/dudeitsasif/HelloWorldAndroid' /usr/local/bin/build_mobile_app.sh"

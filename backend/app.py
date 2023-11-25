@@ -21,16 +21,16 @@ def hello():
 
 @app.route("/deploy", methods=["GET", "POST"])
 def deploy():
-  token = request.args.get('token')
 
   # Extract Project URL
-  # project_url = request.json['project']
+  project_url = request.json['project']
 
   # # Launch the container
-  # p = subprocess.Popen(["../core/initiateDeployment.sh", project_url]) 
-  # code = p.wait() 
+  uid = str(uuid4())
+  p = subprocess.Popen(["../core/initiateDeployment.sh", project_url, uid]) 
+  code = p.wait() 
 
-  # print("Status Code (from backend):", code)
+  print("Status Code (from backend):", code)
 
   if (code):
     return jsonify({
@@ -40,8 +40,7 @@ def deploy():
   # Create a Deployment URL
   ip = subprocess.getoutput("hostname -I | awk '{print $1}'")  
   
-  uid = str(uuid4())
-  url = f"ws://{ip}:6080"
+  url = f"ws://{ip}:6080?token={uid}"
   deployment = Uidmapper(repository=project_url, uid=uid, connection_url=url)
 
   db.session.add(deployment)

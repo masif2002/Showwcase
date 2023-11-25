@@ -24,16 +24,7 @@ const Deploy = () => {
         setStatus("DEPLOYING ...")
         setDisableDeploy(true)
         setIsDeploying(true)
-<<<<<<< HEAD
-        const token = prompt("Token required:")
-        const response = await fetch(`${server}/deploy?token=${token}`, {
-            method: 'POST',
-            headers: {
-                "Content-type": "application/json"
-            },
-            body: JSON.stringify({
-                project: githubURL,
-=======
+  
 
         try {
 
@@ -45,14 +36,13 @@ const Deploy = () => {
                 body: JSON.stringify({
                     project: githubURL,
                 })
->>>>>>> main
             })
             
             const data = await response.json()
             console.log(data)
     
             setStatus(data.status)
-            setURL(window.location.origin + `/view/${data.uid}`)
+            data.uid && setURL(window.location.origin + `/view/${data.uid}`)
     
             setDisableDeploy(false)
             setIsDeploying(false)
@@ -64,7 +54,6 @@ const Deploy = () => {
             alert("Something went wrong!")
         }
     }
-
 
     return (
         <main className='Deploy'>
