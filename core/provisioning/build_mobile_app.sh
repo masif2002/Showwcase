@@ -26,6 +26,8 @@ yes | ~/Android/Sdk/cmdline-tools/latest/bin/sdkmanager --licenses # Accept lice
 chmod +x gradlew
 ./gradlew assembleDebug
 
+sleep 10
+
 # Install APK
 export PATH=$PATH:/home/android/Android/Sdk/platform-tools
 adb install app/build/outputs/apk/debug/app-debug.apk
